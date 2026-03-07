@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - AGRIHUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-grad: linear-gradient(135deg, #10b981, #047857);
+            --primary-solid: #10b981;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-body: #f0fdf4;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+        body.auth-body {
+            background-color: var(--bg-body);
+            background-image: linear-gradient(rgba(16,185,129,0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(16,185,129,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: var(--glass-shadow);
+            padding: 3rem;
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-header { text-align: center; margin-bottom: 2rem; }
+        .auth-header h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        .auth-header p { color: var(--text-light); }
+
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { font-weight: 600; margin-bottom: 0.5rem; display: block; }
+
+        .input-container { position: relative; }
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border-radius: 10px;
+            border: 2px solid rgba(0,0,0,0.1);
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border-color: var(--primary-solid);
+            box-shadow: 0 0 0 4px rgba(16,185,129,0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-grad);
+            color: white;
+            border-radius: 10px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .auth-footer a {
+            color: var(--primary-solid);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .error-msg {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body class="auth-body">
+
+    <div class="glass-card">
+        <div class="auth-header">
+            <h2><i class="fas fa-leaf" style="color:#10b981;"></i> Welcome Back</h2>
+            <p>Login to access your AgriHub dashboard</p>
+        </div>
+
+        <form onsubmit="loginUser(event)">
+            <div class="form-group">
+                <label>Email</label>
+                <div class="input-container">
+                    <input type="email" name="email" required placeholder="Ex: agri91@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-container">
+                    <input type="password" name="password" required placeholder="Enter password">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Login Securely</button>
+
+            <div class="loading" id="loading">Checking credentials...</div>
+            <div class="error-msg" id="errorMsg"></div>
+        </form>
+
+        <div class="auth-footer">
+            <p>Don't have an account? <a href="register.html">Register Here</a></p>
+        </div>
+    </div>
+
+<script>
+async function loginUser(event) {
+    event.preventDefault();
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("errorMsg").innerText = "";
+
+    const email = document.querySelector('input[name="email"]').value;
+    const password = document.querySelector('input[name="password"]').value;
+
+    try {
+        const response = await fetch("http://localhost:8080/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.text();
+        document.getElementById("loading").style.display = "none";
+
+        if (result.toLowerCase().includes("successful")) {
+
+            // 🔐 SAVE LOGIN SESSION (NEW LINE)
+            localStorage.setItem("agriUser", email);
+
+            window.location.href = "index.html";
+        } else {
+            document.getElementById("errorMsg").innerText = result;
+        }
+
+    } catch (error) {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("errorMsg").innerText = "Server error. Try again later.";
+    }
+}
+</script>
+
+</body>
+</html>

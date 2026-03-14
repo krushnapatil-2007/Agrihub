@@ -324,44 +324,43 @@ function closeService() {
 // --- FERTILIZER CALCULATOR ---
 const cropData = {
     // Cereals
-    wheat: { urea: 100, dap: 55, mop: 25, zinc: 5, sulphur: 0, fym: 4 },
-    rice: { urea: 110, dap: 60, mop: 30, zinc: 10, sulphur: 0, fym: 5 },
-    maize: { urea: 90, dap: 50, mop: 30, zinc: 8, sulphur: 0, fym: 5 },
-    bajra: { urea: 60, dap: 30, mop: 20, zinc: 5, sulphur: 0, fym: 3 },
-    jowar: { urea: 70, dap: 40, mop: 25, zinc: 5, sulphur: 0, fym: 4 },
+    wheat: { urea: 50, dap: 45, mop: 25, zinc: 5, sulphur: 0, fym: 4 },
+    rice: { urea: 55, dap: 50, mop: 30, zinc: 10, sulphur: 0, fym: 5 },
+    maize: { urea: 45, dap: 40, mop: 30, zinc: 8, sulphur: 0, fym: 5 },
+    bajra: { urea: 30, dap: 25, mop: 20, zinc: 5, sulphur: 0, fym: 3 },
+    jowar: { urea: 35, dap: 30, mop: 25, zinc: 5, sulphur: 0, fym: 4 },
     
     // Cash Crops
-    cotton: { urea: 130, dap: 70, mop: 40, zinc: 5, sulphur: 10, magnesium: 10, fym: 5 },
-    sugarcane: { urea: 250, dap: 100, mop: 80, zinc: 10, sulphur: 20, fym: 10 },
+    cotton: { urea: 65, dap: 50, mop: 40, zinc: 5, sulphur: 10, magnesium: 10, fym: 5 },
+    sugarcane: { urea: 125, dap: 80, mop: 80, zinc: 10, sulphur: 20, fym: 10 },
     
-    // Pulses (Legumes need less N, more P & S)
-    soybean: { urea: 30, dap: 80, mop: 20, zinc: 5, sulphur: 15, fym: 4 },
-    chana: { urea: 25, dap: 60, mop: 0, zinc: 0, sulphur: 10, fym: 3 },
-    tur: { urea: 25, dap: 60, mop: 0, zinc: 5, sulphur: 10, fym: 3 },
-    moong: { urea: 15, dap: 50, mop: 0, zinc: 0, sulphur: 5, fym: 2 },
-    urad: { urea: 15, dap: 50, mop: 0, zinc: 0, sulphur: 5, fym: 2 },
+    // Pulses
+    soybean: { urea: 15, dap: 50, mop: 20, zinc: 5, sulphur: 15, fym: 4 },
+    chana: { urea: 10, dap: 40, mop: 0, zinc: 0, sulphur: 10, fym: 3 },
+    tur: { urea: 10, dap: 40, mop: 0, zinc: 5, sulphur: 10, fym: 3 },
+    moong: { urea: 8, dap: 35, mop: 0, zinc: 0, sulphur: 5, fym: 2 },
+    urad: { urea: 8, dap: 35, mop: 0, zinc: 0, sulphur: 5, fym: 2 },
     
-    // Oilseeds (High Sulphur Requirement)
-    groundnut: { urea: 25, dap: 75, mop: 25, zinc: 5, sulphur: 15, fym: 4 },
-    mustard: { urea: 70, dap: 50, mop: 20, zinc: 0, sulphur: 15, fym: 4 },
-    sunflower: { urea: 60, dap: 60, mop: 40, zinc: 0, sulphur: 15, fym: 5 },
+    // Oilseeds
+    groundnut: { urea: 15, dap: 45, mop: 25, zinc: 5, sulphur: 15, fym: 4 },
+    mustard: { urea: 35, dap: 40, mop: 20, zinc: 0, sulphur: 15, fym: 4 },
+    sunflower: { urea: 30, dap: 45, mop: 40, zinc: 0, sulphur: 15, fym: 5 },
     
-    // Vegetables (High Nutrient & FYM)
-    potato: { urea: 120, dap: 80, mop: 60, zinc: 10, sulphur: 0, fym: 8 },
-    onion: { urea: 90, dap: 50, mop: 50, zinc: 5, sulphur: 10, fym: 8 },
-    tomato: { urea: 100, dap: 70, mop: 50, zinc: 5, sulphur: 0, fym: 10 },
-    chili: { urea: 90, dap: 60, mop: 40, zinc: 0, sulphur: 0, fym: 8 },
-    brinjal: { urea: 100, dap: 70, mop: 40, zinc: 0, sulphur: 0, fym: 10 },
-    okra: { urea: 80, dap: 50, mop: 30, zinc: 0, sulphur: 0, fym: 8 },
-    cabbage: { urea: 110, dap: 60, mop: 50, zinc: 0, sulphur: 0, fym: 10 },
+    // Vegetables
+    potato: { urea: 60, dap: 60, mop: 60, zinc: 10, sulphur: 0, fym: 8 },
+    onion: { urea: 45, dap: 40, mop: 50, zinc: 5, sulphur: 10, fym: 8 },
+    tomato: { urea: 50, dap: 45, mop: 50, zinc: 5, sulphur: 0, fym: 10 },
+    chili: { urea: 45, dap: 40, mop: 40, zinc: 0, sulphur: 0, fym: 8 },
+    brinjal: { urea: 50, dap: 45, mop: 40, zinc: 0, sulphur: 0, fym: 10 },
+    okra: { urea: 40, dap: 35, mop: 30, zinc: 0, sulphur: 0, fym: 8 },
+    cabbage: { urea: 55, dap: 40, mop: 50, zinc: 0, sulphur: 0, fym: 10 },
     
     // Spices & Fruits
-    ginger: { urea: 100, dap: 80, mop: 60, zinc: 5, sulphur: 0, fym: 10 },
-    turmeric: { urea: 100, dap: 80, mop: 60, zinc: 5, sulphur: 0, fym: 10 },
-    banana: { urea: 300, dap: 150, mop: 200, zinc: 15, sulphur: 0, fym: 15 },
-    pomegranate: { urea: 150, dap: 100, mop: 100, zinc: 10, sulphur: 0, fym: 10 }
+    ginger: { urea: 50, dap: 60, mop: 60, zinc: 5, sulphur: 0, fym: 10 },
+    turmeric: { urea: 50, dap: 60, mop: 60, zinc: 5, sulphur: 0, fym: 10 },
+    banana: { urea: 150, dap: 100, mop: 200, zinc: 15, sulphur: 0, fym: 15 },
+    pomegranate: { urea: 75, dap: 70, mop: 100, zinc: 10, sulphur: 0, fym: 10 }
 };
-
 function calculateFertilizer() {
     const land = document.getElementById('landSize').value;
     const crop = document.getElementById('cropType').value;

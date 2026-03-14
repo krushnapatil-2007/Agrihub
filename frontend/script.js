@@ -295,8 +295,7 @@ function switchTab(tabName) {
         loginBtn.classList.remove('active'); registerBtn.classList.add('active');
     }
 }
-function handleLogin(e) { e.preventDefault(); alert("Login Successful!"); closeModal(); }
-function handleRegister(e) { e.preventDefault(); alert("Registration Successful! Please Login."); switchTab('login'); }
+
 window.addEventListener('scroll', () => {
     document.querySelectorAll('.reveal').forEach(reveal => {
         if (reveal.getBoundingClientRect().top < window.innerHeight - 100) reveal.classList.add('active');

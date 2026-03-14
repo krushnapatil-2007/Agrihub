@@ -67,17 +67,23 @@ function switchTab(tabName) {
     }
 }
 
-// ================= LOGIN HANDLER (UPDATED) =================
+// ================= LOGIN HANDLER =================
 async function handleLogin(e) {
     e.preventDefault();
+
     const email = document.querySelector("#loginForm input[type='tel']").value;
     const password = document.querySelector("#loginForm input[type='password']").value;
 
-const res = await fetch("https://agrihub-production.up.railway.app/api/auth/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, password })
-});
+    const res = await fetch("https://agrihub-backend-production.up.railway.app/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    });
 
     const result = await res.text();
 
@@ -90,18 +96,22 @@ const res = await fetch("https://agrihub-production.up.railway.app/api/auth/logi
     }
 }
 
-// ================= REGISTER HANDLER (UPDATED) =================
 async function handleRegister(e) {
     e.preventDefault();
+
     const fullName = document.querySelector("#registerForm input[type='text']").value;
     const mobile = document.querySelector("#registerForm input[type='tel']").value;
     const password = document.querySelector("#registerForm input[type='password']").value;
 
-const res = await fetch("https://agrihub-production.up.railway.app/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ full_name: fullName, email: mobile, password })
-});
+    const res = await fetch("https://agrihub-backend-production.up.railway.app/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            fullName: fullName,
+            email: mobile,
+            password: password
+        })
+    });
 
     const result = await res.text();
     alert(result);

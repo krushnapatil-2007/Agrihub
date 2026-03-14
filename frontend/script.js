@@ -73,11 +73,11 @@ async function handleLogin(e) {
     const email = document.querySelector("#loginForm input[type='tel']").value;
     const password = document.querySelector("#loginForm input[type='password']").value;
 
-    const res = await fetch("http://localhost:8080/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-    });
+const res = await fetch("https://agrihub-production.up.railway.app/api/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+});
 
     const result = await res.text();
 
@@ -97,11 +97,11 @@ async function handleRegister(e) {
     const mobile = document.querySelector("#registerForm input[type='tel']").value;
     const password = document.querySelector("#registerForm input[type='password']").value;
 
-    const res = await fetch("http://localhost:8080/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ full_name: fullName, email: mobile, password })
-    });
+const res = await fetch("https://agrihub-production.up.railway.app/api/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ full_name: fullName, email: mobile, password })
+});
 
     const result = await res.text();
     alert(result);
